@@ -1,18 +1,50 @@
 .visual-agent {
-    position: relative;
-    width: 640px;
-    height: 480px;
-    margin: 20px auto;
-    border: 2px solid #ffcc00;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.input-video,
+.output-canvas {
     border-radius: 12px;
-    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.controls button {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.controls button:hover:not(:disabled) {
+    background-color: #357abd;
+    transform: scale(1.05);
 }
 
 .input-video {
-    display: none; /* hide raw video, we draw on canvas */
+    display: none; /* hide raw video */
 }
 
 .output-canvas {
-    width: 100%;
-    height: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }

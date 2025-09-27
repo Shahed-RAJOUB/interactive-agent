@@ -7,6 +7,7 @@ import ToDoList from "../to-do-list/ToDoList";
 import VisualAgent from "../visual-agent/VisualAgent";
 
 
+
 const VoiceAgent = () => {
     const [time, setTime] = useState("");
     const todoVoiceRef = useRef(null);
@@ -57,9 +58,12 @@ const VoiceAgent = () => {
 
     return (
         <div className="voice-agent">
+
             {time && <div className="time-display">{time}</div>}
 
+            {/* you need API Key from https://api.openweathermap.org/ for free calls */}
             <Weather city="Sankt Pölten"  />
+
             <VisualAgent />   {/* 👀 Add visual recognition */}
             {/* Pass ref to control ToDoList */}
             <ToDoList voiceControl={todoVoiceRef} />

@@ -136,3 +136,53 @@ this project will show three buttons :
 
 #### there are configured commands like when you say (Zeit) it shows time and when you say (Stopp Zeit) it stops it
 #### Another command would be adding to ToDo list by saying (ToDo) when you are done (fertig)
+
+
+#### Mediapipe data extraction for face movement recognition :
+
+currently gathering data from Mediapipe Face Detection landmarks:
+
+0 → nose tip
+
+1 → left eye (inner corner)
+
+2 → right eye (inner corner)
+
+**then export it to excel :** 
+
+![img.png](img.png)
+
+| Column         | Example                    | Meaning                                                                                                |
+| -------------- | -------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Time**       | `2025-09-27T15:26:37.180Z` | Timestamp when this frame was recorded.                                                                |
+| **Nose_X**     | `0.4483`                   | Horizontal position of the nose tip, normalized between 0 (left edge of the image) and 1 (right edge). |
+| **Nose_Y**     | `0.7497`                   | Vertical position of the nose tip, normalized between 0 (top) and 1 (bottom).                          |
+| **LeftEye_X**  | `0.5262`                   | Horizontal position of the left eye.                                                                   |
+| **LeftEye_Y**  | `0.7289`                   | Vertical position of the left eye.                                                                     |
+| **RightEye_X** | `0.5394`                   | Horizontal position of the right eye.                                                                  |
+| **RightEye_Y** | `0.8143`                   | Vertical position of the right eye.                                                                    |
+
+Key points:
+
+Normalized coordinates:
+
+* 0 = left/top of the video frame
+* 1 = right/bottom of the video frame
+
+Frame-based tracking:
+
+Each row is one frame where a face was detected.
+
+These can be used to track head movement over time.
+
+Converting to pixels (optional):
+
+```
+If your canvas is 640x480 pixels:
+
+pixelX = Nose_X * 640
+pixelY = Nose_Y * 480
+
+```
+
+This gives the position on the actual video frame.
