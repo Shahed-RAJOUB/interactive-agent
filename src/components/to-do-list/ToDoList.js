@@ -36,7 +36,12 @@ const ToDoList = ({ voiceControl }) => {
             });
         } else if (mode === "stop") {
             setListeningForTodo(false);
-            addTask(transcript);
+            // Extract text between "Plan" and "fertig"
+            const match = transcript.match(/Plan\s+(.*?)\s+fertig/i);
+            if (match && match[1]) {
+                addTask(match[1].trim());
+            }
+
             resetTranscript();
         }
     };

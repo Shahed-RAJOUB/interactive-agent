@@ -31,7 +31,7 @@ export const createCommands = ({ setTime, addTodoFromVoice, stopListening }) => 
 
     // --- ToDo Commands ---
     {
-        command: "todo",
+        command: "plan",
         callback: () => {
             addTodoFromVoice("start"); // tell ToDoList to start listening
         },
