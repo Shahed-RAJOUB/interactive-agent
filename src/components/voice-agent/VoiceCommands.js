@@ -1,18 +1,15 @@
 let timerInterval = null;
 
-export const commands = [
+export const createCommands = ({ setTime, addTodoFromVoice, stopListening }) => [
+    // --- Zeit Command ---
     {
         command: "Zeit",
-        callback: (setTime) => {
-            // Clear previous interval if any
+        callback: () => {
             if (timerInterval) clearInterval(timerInterval);
 
-            // Initialize start time as current time
             let startTime = new Date();
-
-            // Update time every second
             timerInterval = setInterval(() => {
-                startTime = new Date(startTime.getTime() + 1000); // increment 1 sec
+                startTime = new Date(startTime.getTime() + 1000);
                 const formatted = startTime.toLocaleTimeString("de-DE", {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -29,6 +26,21 @@ export const commands = [
                 clearInterval(timerInterval);
                 timerInterval = null;
             }
+        },
+    },
+
+    // --- ToDo Commands ---
+    {
+        command: "todo",
+        callback: () => {
+            addTodoFromVoice("start"); // tell ToDoList to start listening
+        },
+    },
+    {
+        command: "done",
+        callback: () => {
+            addTodoFromVoice("stop"); // tell ToDoList to stop listening & save
+            stopListening();
         },
     },
 ];

@@ -4,9 +4,6 @@
     left: 20px;
     width: 200px;
     background: #111;
-    color: white;
-    border: 1px solid #555;
-    border-radius: 8px;
     padding: 10px;
     font-family: sans-serif;
 }
@@ -14,7 +11,7 @@
 .todo-container h3 {
     margin: 0 0 10px 0;
     font-size: 18px;
-    text-align: center;
+    text-align: left;
 }
 
 .todo-input {
@@ -46,6 +43,7 @@
     margin: 0;
     max-height: 200px;
     overflow-y: auto;
+    text-align: left;
 }
 
 .todo-container li {

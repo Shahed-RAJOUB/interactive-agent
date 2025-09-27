@@ -1,45 +1,57 @@
 import React, { useState } from "react";
 import "./ToDoList.css";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
-const ToDoList = () => {
+const ToDoList = ({ voiceControl }) => {
     const [tasks, setTasks] = useState([]);
-    const [input, setInput] = useState("");
+    const [listeningForTodo, setListeningForTodo] = useState(false);
 
-    const addTask = () => {
-        if (!input.trim()) return;
-        setTasks([...tasks, { text: input, done: false }]);
-        setInput("");
+    const { transcript, resetTranscript } = useSpeechRecognition();
+
+    const addTask = (text) => {
+        if (!text.trim()) return;
+        setTasks((prev) => [...prev, { text, done: false }]);
     };
 
     const toggleDone = (index) => {
-        const newTasks = tasks.map((task, i) =>
-            i === index ? { ...task, done: !task.done } : task
+        setTasks((prev) =>
+            prev.map((task, i) =>
+                i === index ? { ...task, done: !task.done } : task
+            )
         );
-        setTasks(newTasks);
     };
 
     const deleteTask = (index) => {
-        const newTasks = tasks.filter((_, i) => i !== index);
-        setTasks(newTasks);
+        setTasks((prev) => prev.filter((_, i) => i !== index));
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") addTask();
+    // --- Function triggered from VoiceCommands.js ---
+    const addTodoFromVoice = (mode) => {
+        if (mode === "start") {
+            resetTranscript();
+            setListeningForTodo(true);
+            SpeechRecognition.startListening({
+                continuous: true,
+                language: "de-DE",
+            });
+        } else if (mode === "stop") {
+            setListeningForTodo(false);
+            addTask(transcript);
+            resetTranscript();
+        }
     };
+
+    // Expose control to parent
+    if (voiceControl) {
+        voiceControl.current = addTodoFromVoice;
+    }
 
     return (
         <div className="todo-container">
             <h3>To-Do</h3>
-            <div className="todo-input">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Neue Aufgabe..."
-                />
-                <button onClick={addTask}>+</button>
-            </div>
+            <hr/>
+            <hr/>
+            {listeningForTodo && <p>🎤 Spreche deine Aufgabe...</p>}
             <ul>
                 {tasks.map((task, index) => (
                     <li key={index} className={task.done ? "done" : ""}>

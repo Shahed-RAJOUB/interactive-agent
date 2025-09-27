@@ -1,25 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 import "./VoiceAgent.css";
-import { commands as voiceCommands } from "./VoiceCommands";
+import { createCommands } from "./VoiceCommands";
 import Weather from "../weather/Weather";
 import ToDoList from "../to-do-list/ToDoList";
+import VisualAgent from "../visual-agent/VisualAgent";
+
 
 const VoiceAgent = () => {
     const [time, setTime] = useState("");
-
-    // Map commands to include state setter
-    const commands = voiceCommands.map((cmd) => ({
-        ...cmd,
-        callback: () => cmd.callback(setTime),
-    }));
+    const todoVoiceRef = useRef(null);
 
     const {
         transcript,
         listening,
         resetTranscript,
         browserSupportsSpeechRecognition,
-    } = useSpeechRecognition({ commands });
+    } = useSpeechRecognition({
+        commands: createCommands({
+            setTime,
+            addTodoFromVoice: (mode) => todoVoiceRef.current?.(mode),
+            stopListening: SpeechRecognition.stopListening,
+        }),
+    });
 
     const speak = (text, callback) => {
         if (!text) return;
@@ -56,10 +59,10 @@ const VoiceAgent = () => {
         <div className="voice-agent">
             {time && <div className="time-display">{time}</div>}
 
-            {/* Weather Component */}
-            <Weather city="Sankt Pölten" />
-
-            <ToDoList />
+            <Weather city="Sankt Pölten"  />
+            <VisualAgent />   {/* 👀 Add visual recognition */}
+            {/* Pass ref to control ToDoList */}
+            <ToDoList voiceControl={todoVoiceRef} />
 
             <p>🎙️ Mikrofon: {listening ? "an" : "aus"}</p>
             <div className="buttons">

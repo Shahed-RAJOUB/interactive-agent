@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Weather.css";
 
 const Weather = ({ city = "Berlin" }) => {
-    const [weather, setWeather] = useState("");
+    const [weather, setWeather] = useState(null);
     const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
     useEffect(() => {
@@ -13,9 +13,12 @@ const Weather = ({ city = "Berlin" }) => {
                 );
                 const data = await response.json();
                 if (data.main) {
-                    setWeather(
-                        `${data.name}: ${Math.round(data.main.temp)}°C, ${data.weather[0].description}`
-                    );
+                    setWeather({
+                        temp: Math.round(data.main.temp),
+                        desc: data.weather[0].description,
+                        name: data.name,
+                        icon: data.weather[0].icon,
+                    });
                 }
             } catch (err) {
                 console.error("Weather fetch failed:", err);
@@ -29,7 +32,20 @@ const Weather = ({ city = "Berlin" }) => {
 
     if (!weather) return null;
 
-    return <div className="weather-display">{weather}</div>;
+    return (
+        <div className="weather-display">
+            {weather.icon && (
+                <img
+                    src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`}
+                    alt={weather.desc}
+                    className="weather-icon"
+                />
+            )}
+            <div>
+                {weather.name}: {weather.temp}°C, {weather.desc}
+            </div>
+        </div>
+    );
 };
 
 export default Weather;
