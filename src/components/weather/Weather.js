@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Weather.css";
 
-const Weather = ({ city = "Berlin", apiKey }) => {
+const Weather = ({ city = "Berlin" }) => {
     const [weather, setWeather] = useState("");
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
 
     useEffect(() => {
         const fetchWeather = async () => {

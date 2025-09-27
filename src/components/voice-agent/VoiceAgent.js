@@ -57,7 +57,7 @@ const VoiceAgent = () => {
             {time && <div className="time-display">{time}</div>}
 
             {/* Weather Component */}
-            <Weather city="Sankt Pölten" apiKey="e1970a311a5b58e82af23e428d5df802" />
+            <Weather city="Sankt Pölten" />
 
             <ToDoList />
 
