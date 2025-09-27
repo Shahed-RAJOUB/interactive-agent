@@ -1,8 +1,56 @@
-# Getting Started with Create React App
+# Getting Started with Interactive agent React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Configure Git
+
+Assuming that you downloaded Git, start with config. In the terminal :
+
+``
+git config --global user.email "you@example.com"
+``
+
+``
+git config --global user.name "Your Name"
+``
+
+then clone the project:
+``
+git clone https://github.com/Shahed-RAJOUB/interactive-agent.git
+``
+
+then start working by making a branch :
+``
+git checkout -b new-branch-name
+``
+
+do the changes and commit them with a message :
+``
+git commit -m 'message'
+``
+Push to the branch:
+``
+git push new-branch-name
+``
+
+Now you can login GitHub and create a Merge request with master and assign it to me for checking and merging.
+once it is merged you have to start new with:
+
+``
+git checkout master
+``
+then 
+``
+git pull
+``
+
+and start over with new branch :) 
+
 ## Available Scripts
+
+Install before 
+
+### `npm install`
 
 In the project directory, you can run:
 
@@ -71,4 +119,20 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Environment 
 
+You will need env file ( just make a new file with the name .env and save the api key for weather in it )
+
+``
+REACT_APP_WEATHER_API_KEY=the key
+``
+
 In React, all env variables must start with REACT_APP_.
+
+### Usage 
+
+this project will show three buttons :
+- Start ---> listen to you
+- stop ----> stops listening
+- reset ---> restart fresh
+
+#### there are configured commands like when you say (Zeit) it shows time and when you say (Stopp Zeit) it stops it
+#### Another command would be adding to ToDo list by saying (ToDo) when you are done (fertig)

@@ -37,7 +37,7 @@ export const createCommands = ({ setTime, addTodoFromVoice, stopListening }) => 
         },
     },
     {
-        command: "done",
+        command: "fertig",
         callback: () => {
             addTodoFromVoice("stop"); // tell ToDoList to stop listening & save
             stopListening();
